@@ -1,0 +1,26 @@
+{% extends "DiigoBundle::layout.html.twig" %}
+
+{% block diigo %}
+    <section class="diigo">
+        <article>
+
+        {% for item in diigo %}
+            <header>
+                <h2>{{ item.title }}</h2>
+                <p>Published at <time pubdate datetime="{{ item.created_at }}">{{ item.created_at }}</time> by {{ item.user }} with tags {{ item.tags }}</p>
+            </header>
+            
+            {% if item.desc %}
+            <section class="content">
+                {{ item.desc }}
+            </section>
+            {% endif %}
+
+            <footer>
+                <p><a href="{{ item.url }}" title="Go to {{ item.title }}">Show entry</a></p>
+            </footer>
+        {% endfor %}
+
+        </article>
+    </section>
+{% endblock %}

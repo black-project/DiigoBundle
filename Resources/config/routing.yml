@@ -1,0 +1,7 @@
+index:
+    pattern:  /diigo/
+    defaults: { _controller: DiigoBundle:Diigo:index }
+
+show:
+    pattern:  /diigo/show/{username}
+    defaults: { _controller: DiigoBundle:Diigo:show }
