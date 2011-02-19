@@ -17,7 +17,7 @@ class DiigoAPI implements ServiceInterface
   
   const VERSION = '0.1';
   
-  protected static $_url = 'https://secure.diigo.com/api/v2/bookmarks';
+  protected static $_url = 'https://secure.diigo.com/api/v2';
   
   protected
       $_username,
@@ -54,7 +54,7 @@ class DiigoAPI implements ServiceInterface
   {   
       $options = \array_merge($this->options, $_options);
       
-      $uri = $this->_getUri($options, 'GET');
+      $uri = $this->_getUri('bookmarks', $options);
       
       $client = $this->_createClient($uri);
       
@@ -87,14 +87,14 @@ class DiigoAPI implements ServiceInterface
    * 
    * @return      array $client     The http client
    */
-  protected function _createClient($uri, $method = 'GET')
+  protected function _createClient($uri, $httpMethod = 'GET')
   {
       $client = $this->_createZendClient();
       $client->setConfig(array(
           'maxredirects'  => 0,
           'timeout'       => 30,
           'adapter'       => 'Zend\\Http\\Client\\Adapter\\Curl',
-          'method'        => $method
+          'method'        => $httpMethod
       ));
       $client->setUri($uri);
       $client->setAuth($this->username, $this->password, ZendClient::AUTH_BASIC);
@@ -105,13 +105,14 @@ class DiigoAPI implements ServiceInterface
   /**
    * Create the uri
    * 
+   * @param       string  $apiMethod    The method api
    * @param       array   $options      An array of options
    * 
    * @return      string  $uri          The complete url
    */
-  protected function _getUri($options)
+  protected function _getUri($apiMethod, $options)
   {
-      $uri = sprintf('%s?%s', self::$_url, http_build_query($options));
+      $uri = sprintf('%s/%s?%s', self::$_url, $apiMethod, http_build_query($options));
 
       return $uri;
   }
