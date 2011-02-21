@@ -1,0 +1,13 @@
+parameters:
+    diigo.class:      Blackroom\DiigoBundle\Service\DiigoAPI
+    diigo.key:        null
+    diigo.username:   null
+    diigo.password:   null
+    
+services:
+    diigo:
+        class:        %diigo.class%
+        arguments:
+            key:      %diigo.key%
+            username: %diigo.username%
+            password: %diigo.password%

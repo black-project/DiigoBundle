@@ -12,6 +12,7 @@ class Configuration
 
         return $tb
             ->root('diigo', 'array')
+            ->scalarNode('key')->end()
             ->scalarNode('username')->isRequired()->end()
             ->scalarNode('password')->isRequired()->end()
         ->end()
