@@ -82,10 +82,10 @@ class DiigoAPI implements ServiceInterface
   /**
    * Create a new http client
    * 
-   * @param       string $uri       The base url
-   * @method      string $method    HTTP method (default GET)
+   * @param       string $uri           The base url
+   * @method      string $httpMethod    HTTP method (default GET)
    * 
-   * @return      array $client     The http client
+   * @return      array  $client    The http client
    */
   protected function _createClient($uri, $httpMethod = 'GET')
   {
