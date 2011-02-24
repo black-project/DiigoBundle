@@ -57,25 +57,63 @@ class DiigoAPI implements ServiceInterface
       $uri = $this->_getUri('bookmarks', $options);
       
       $client = $this->_createClient($uri);
+              
+      $body = $client->request()->getBody();
       
-      $response = $client->request();
+      $result = json_decode($body);
       
-      return $response->getBody();
+      return $result;
   }
   
   
   /**
    * Save new bookmark
    * 
-   * @todo        make the code :)
+   * @todo        kick the diigo's developpers ass
    * 
    * @param       array $_options    An array of options
    * 
    * @return      nothing
    */
   public function saveBookmark(array $_options)
+  {   
+      if(null == $_options['url'] || null == $_options['title'])
+      {
+        return 'An error occured';
+      }
+      
+      foreach($_options as $key => $value)
+      {
+        $_options[$key] = urlencode($value);
+      }
+      
+      $options = \array_merge($this->options, $_options);
+      
+      $uri = $this->_getUri('bookmarks', $options);
+
+      $client = $this->_createClient($uri, 'POST');
+      
+      $body = $client->request()->getBody();
+      
+      $result = json_decode($body);
+      
+      return $result;
+  }
+  
+  /**
+   * Get a bookmark of an user
+   * 
+   * @param       string  $id          Id from the getBookmarks() object
+   * @param       array   $_options    An array of options
+   * 
+   * @return      array   $result      The bookmark
+   */
+  public function getBookmark($id, $_options)
   {
-      return null;
+    $bookmarks = $this->getBookmarks($_options);
+    $result = $bookmarks[$id];
+    
+    return $result;
   }
   
   
@@ -83,7 +121,7 @@ class DiigoAPI implements ServiceInterface
    * Create a new http client
    * 
    * @param       string $uri           The base url
-   * @method      string $httpMethod    HTTP method (default GET)
+   * @param       string $httpMethod    HTTP method (default GET)
    * 
    * @return      array  $client    The http client
    */

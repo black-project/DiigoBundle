@@ -3,24 +3,41 @@
 {% block diigo %}
     <section class="diigo">
         <article>
+        
+        {% if diigo|length == 1 %}
 
-        {% for item in diigo %}
             <header>
-                <h2>{{ item.title }}</h2>
-                <p>Published at <time pubdate datetime="{{ item.created_at }}">{{ item.created_at }}</time> by {{ item.user }} with tags {{ item.tags }}</p>
+                <h2>{{ diigo.title }}</h2>
+                <p>Published at <time pubdate datetime="{{ diigo.created_at }}">{{ diigo.created_at }}</time> by {{ diigo.user }} with tags {{ diigo.tags }}</p>
             </header>
-            
-            {% if item.desc %}
+
+            {% if diigo.desc %}
             <section class="content">
-                {{ item.desc }}
+                {{ diigo.desc }}
             </section>
             {% endif %}
 
             <footer>
-                <p><a href="{{ item.url }}" title="Go to {{ item.title }}">Show entry</a></p>
+                <p><a href="{{ diigo.url }}" title="Go to {{ diigo.title }}">Show entry</a></p>
             </footer>
-        {% endfor %}
+        {% else %}
+            {% for item in diigo %}
+                <header>
+                    <h2>{{ item.title }}</h2>
+                    <p>Published at <time pubdate datetime="{{ item.created_at }}">{{ item.created_at }}</time> by {{ item.user }} with tags {{ item.tags }}</p>
+                </header>
 
+                {% if item.desc %}
+                <section class="content">
+                    {{ item.desc }}
+                </section>
+                {% endif %}
+
+                <footer>
+                    <p><a href="{{ item.url }}" title="Go to {{ item.title }}">Show entry</a></p>
+                </footer>
+            {% endfor %}
+        {% endif %}
         </article>
     </section>
 {% endblock %}
