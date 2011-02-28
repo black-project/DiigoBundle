@@ -427,12 +427,12 @@ class DiigoAPI
    */
   protected function _verifyHeader($response)
   {
-      $header = $client->getStatus();
+      $header = $response->getStatus();
       
       switch($header)
       {
           case '200':
-              return $client;
+              return $response;
           case '400':
               return '{"error": "400 Bad Request"}';
           case '401':
