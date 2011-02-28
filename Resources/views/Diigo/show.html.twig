@@ -5,21 +5,26 @@
         <article>
         
         {% if diigo|length == 1 %}
+            
+            {% if diigo.error %}
+                {{ diigo.error }}
+            {% else %}
+                <header>
+                    <h2>{{ diigo.title }}</h2>
+                    <p>Published at <time pubdate datetime="{{ diigo.created_at }}">{{ diigo.created_at }}</time> by {{ diigo.user }} with tags {{ diigo.tags }}</p>
+                </header>
 
-            <header>
-                <h2>{{ diigo.title }}</h2>
-                <p>Published at <time pubdate datetime="{{ diigo.created_at }}">{{ diigo.created_at }}</time> by {{ diigo.user }} with tags {{ diigo.tags }}</p>
-            </header>
+                {% if diigo.desc %}
+                <section class="content">
+                    {{ diigo.desc }}
+                </section>
+                {% endif %}
 
-            {% if diigo.desc %}
-            <section class="content">
-                {{ diigo.desc }}
-            </section>
+                <footer>
+                    <p><a href="{{ diigo.url }}" title="Go to {{ diigo.title }}">Show entry</a></p>
+                </footer>
             {% endif %}
 
-            <footer>
-                <p><a href="{{ diigo.url }}" title="Go to {{ diigo.title }}">Show entry</a></p>
-            </footer>
         {% else %}
             {% for item in diigo %}
                 <header>

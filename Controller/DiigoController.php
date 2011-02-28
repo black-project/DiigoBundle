@@ -14,12 +14,13 @@ class DiigoController extends Controller
     
     public function showAction($username)
     {     
-        $diigo = $this->get('diigo');      
-
-        $result = $diigo->getBookmarks(array(
-                                    'user' => $username,
-                                    'count' => 10
-                                  ));  
+        $diigo = $this->get('diigo');
+        $diigo->setUser('pockystar');
+        $diigo->setStart(10);
+               
+        $result = $diigo->getBookmarks();
+        
+        $diigo->resetArguments();
         
         return $this->render('DiigoBundle:Diigo:show.html.twig', array('diigo' => $result));
     }
